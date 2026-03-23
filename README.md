@@ -126,6 +126,13 @@ You may also find:
 - codebook-style parameter documentation
 - comparative analysis notes
 
+Current top-level folders:
+
+- `frontend/`: interactive floor-plan viewer, boundary editor, and patient-flow prototype
+- `frontend/assets/`: static front-end assets such as the floor plan image
+- `simulation/`: notebooks and simulation work
+- `docs/`: PDFs and supporting writeups
+
 ---
 
 ## Modeling Philosophy

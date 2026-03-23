@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Pitt ED Floor Viewer</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div>
+          <p class="eyebrow">Pittsburgh Trauma Medical Center</p>
+          <h1>The Pitt ED Floor Viewer</h1>
+          <p class="lede">
+            Exact visual base from the set floor plan, with a semantic overlay for rooms,
+            open floor, and patient-flow paths. The blue bed blocks are intentionally ignored.
+          </p>
+        </div>
+
+        <section class="panel">
+          <h2>Display</h2>
+          <label class="toggle">
+            <input id="toggle-spaces" type="checkbox" checked>
+            <span>Show space overlays</span>
+          </label>
+          <label class="toggle">
+            <input id="toggle-labels" type="checkbox" checked>
+            <span>Show labels</span>
+          </label>
+          <label class="toggle">
+            <input id="toggle-open" type="checkbox" checked>
+            <span>Highlight empty floor zones</span>
+          </label>
+        </section>
+
+        <section class="panel">
+          <h2>Patient Flow Demo</h2>
+          <label class="field">
+            <span>Route</span>
+            <select id="route-select"></select>
+          </label>
+          <label class="field">
+            <span>Transport</span>
+            <select id="entity-select">
+              <option value="patient">Patient</option>
+              <option value="bed">Bed</option>
+              <option value="wheelchair">Wheelchair</option>
+            </select>
+          </label>
+          <button id="play-route" type="button">Play Route</button>
+        </section>
+
+        <section class="panel">
+          <h2>Legend</h2>
+          <ul class="legend">
+            <li><span class="swatch room"></span> Clinical rooms</li>
+            <li><span class="swatch support"></span> Support / admin spaces</li>
+            <li><span class="swatch open"></span> Empty floor / circulation</li>
+            <li><span class="swatch path"></span> Sample patient path</li>
+          </ul>
+        </section>
+
+        <section class="panel">
+          <h2>Selected Space</h2>
+          <div id="space-details" class="details">
+            Hover a highlighted zone to inspect the floor model.
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Boundary Editor</h2>
+          <label class="toggle">
+            <input id="toggle-edit-mode" type="checkbox">
+            <span>Enable manual boundary editing</span>
+          </label>
+          <label class="field">
+            <span>Editable space</span>
+            <select id="space-select"></select>
+          </label>
+          <div class="button-row">
+            <button id="insert-vertex" type="button">Add Corner</button>
+            <button id="remove-vertex" type="button">Remove Corner</button>
+          </div>
+          <div class="button-row">
+            <button id="start-draw-space" type="button">Draw New Shape</button>
+            <button id="finish-draw-space" type="button">Finish Shape</button>
+          </div>
+          <div class="button-row">
+            <button id="copy-selected-space" type="button">Copy Selected Space</button>
+            <button id="copy-all-spaces" type="button">Copy All Spaces</button>
+          </div>
+          <div class="button-row button-row-single">
+            <button id="save-boundaries" type="button">Save Boundary Data</button>
+          </div>
+          <p class="details">
+            In edit mode, click a space to select it. Drag the round points to move the border.
+            Use <strong>Add Corner</strong> and then click an edge to add another point. Use
+            <strong>Draw New Shape</strong> if you want to redraw the whole boundary.
+          </p>
+          <label class="field">
+            <span>Export</span>
+            <textarea id="export-output" rows="10" spellcheck="false" readonly></textarea>
+          </label>
+        </section>
+      </aside>
+
+      <main class="stage">
+        <div class="canvas-frame">
+          <div class="canvas-stack">
+            <img
+              id="floor-image"
+              src="./assets/Set Designers Floor Plan of The Pitt.webp"
+              alt="Floor plan of The Pitt emergency department"
+            >
+            <svg
+              id="overlay"
+              viewBox="0 0 1000 877.7778"
+              preserveAspectRatio="xMidYMid meet"
+              aria-label="Interactive semantic overlay for the floor plan"
+            >
+              <g id="spaces-layer"></g>
+              <g id="paths-layer"></g>
+              <g id="entities-layer"></g>
+              <g id="editor-layer"></g>
+              <g id="labels-layer"></g>
+            </svg>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="./floor-data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
